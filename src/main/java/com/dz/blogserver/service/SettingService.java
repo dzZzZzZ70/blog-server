@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -283,9 +284,11 @@ public class SettingService {
      */
     public ResultEntity findSettingType(String editUser) {
         ResultEntity resultEntity = new ResultEntity();
-        List<SettingBlogType> dataList = settingBlogTypeRepository
-                .findByEditUserAndDataFlag(editUser, ApplicationConstants.Able.VALID.getIndex());
-        resultEntity.setResult(dataList);
+//        List<SettingBlogType> dataList = settingBlogTypeRepository
+//                .findByEditUserAndDataFlag(editUser, ApplicationConstants.Able.VALID.getIndex());
+        List<Map<String, Object>> maps = settingBlogTypeRepository.countByType(editUser);
+        maps.sort((o1, o2) -> (int) ((long) o2.get("qty") - (long) o1.get("qty")));
+        resultEntity.setResult(maps);
 
         return resultEntity;
     }

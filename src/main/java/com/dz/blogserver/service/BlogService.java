@@ -23,10 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadInfo;
 import java.lang.management.ThreadMXBean;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class BlogService {
@@ -42,12 +39,12 @@ public class BlogService {
     public ResultEntity findBlogByUser(String userId) {
         ResultEntity resultEntity = new ResultEntity();
         try {
-            List<BusinessBlog> businessBlogList =
-                businessBlogRepository.findByCreateUserAndDataFlag(
-                    userId, ApplicationConstants.Able.VALID.getIndex());
-
+//            List<BusinessBlog> businessBlogList =
+//                businessBlogRepository.findByCreateUserAndDataFlag(
+//                    userId, ApplicationConstants.Able.VALID.getIndex());
+            List<BusinessBlog> dataMaps = businessBlogRepository.countByType(userId);
             resultEntity.setFlag(ApplicationConstants.ResultFlag.SUCCESS.getIndex());
-            resultEntity.setResult(businessBlogList);
+            resultEntity.setResult(dataMaps);
         } catch (Exception e) {
             logger.error("invoke findBlogByUser method error " + e.getMessage());
             e.printStackTrace();
