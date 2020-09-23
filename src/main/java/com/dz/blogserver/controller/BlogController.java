@@ -1,6 +1,7 @@
 package com.dz.blogserver.controller;
 
 import com.dz.blogserver.service.BlogService;
+import com.dz.blogserver.util.AppUtils;
 import com.dz.blogserver.util.CommonUtils;
 import com.dz.blogserver.vo.business.BlogQuery;
 import com.dz.blogserver.vo.business.BusinessBlogEdit;
@@ -18,19 +19,24 @@ public class BlogController {
     private BlogService blogService;
 
     @RequestMapping(value = "/findBlogByUser", method = RequestMethod.POST)
-    public ResultEntity findBlogByUser(String userId) {
+    public ResultEntity findBlogByUser(@RequestBody BlogQuery query) {
         ResultEntity resultEntity = new ResultEntity();
+        String userId = AppUtils.getUser().getId();
         if (userId == null || "".equals(userId)) {
             resultEntity.failed("用户不能为空");
             return resultEntity;
         }
 
-        resultEntity = blogService.findBlogByUser(userId);
-        return resultEntity;
+        return blogService.findBlogByUser(query, AppUtils.getUser().getId());
+    }
+
+    @RequestMapping(value = "/findBlogPage", method = RequestMethod.POST)
+    public ResultEntity findBlogPage(@RequestBody BlogQuery query) {
+        return blogService.findBlogPage(query);
     }
 
     @RequestMapping(value = "/findBlogByBlogType", method = RequestMethod.POST)
-    public ResultEntity findBlogByUser(@RequestBody BlogQuery query) {
+    public ResultEntity findBlogByBlogType(@RequestBody BlogQuery query) {
         ResultEntity resultEntity = new ResultEntity();
         if (query.getBlogTypeId() == null || "".equals(query.getBlogTypeId())) {
             resultEntity.failed("分类不能为空");
@@ -41,7 +47,7 @@ public class BlogController {
         return resultEntity;
     }
 
-    @RequestMapping(value = "/saveBusinessBlog", method = RequestMethod.POST)
+    @RequestMapping(value = "/saveBusinessBlog", method = RequestMethod.PUT)
     public ResultEntity saveBusinessBlog(@RequestBody
                                                      BusinessBlogEdit businessBlogEdit) {
         ResultEntity resultEntity = new ResultEntity();
@@ -59,8 +65,8 @@ public class BlogController {
         return resultEntity;
     }
 
-    @RequestMapping(value = "/editBusinessBlog", method = RequestMethod.POST)
-    public ResultEntity editBusinessBlog(BusinessBlogEdit businessBlogEdit, String userId) {
+    @RequestMapping(value = "/editBusinessBlog", method = RequestMethod.PATCH)
+    public ResultEntity editBusinessBlog(@RequestBody BusinessBlogEdit businessBlogEdit) {
         ResultEntity resultEntity = new ResultEntity();
 
         if (businessBlogEdit.getTitle() == null || "".equals(businessBlogEdit.getTitle())) {
@@ -73,7 +79,7 @@ public class BlogController {
             return resultEntity;
         }
 
-        resultEntity = blogService.editBusinessBlog(businessBlogEdit, userId);
+        resultEntity = blogService.editBusinessBlog(businessBlogEdit);
         return resultEntity;
     }
 

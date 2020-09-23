@@ -14,28 +14,28 @@ public class PageQuery {
      */
 //    @NotNull(message = "当前页码不能为空")
 //    @NotEmpty(message = "当前页码不能为空")
-    private long current;
+    private int current;
 
     /**
      * 每页大小
      */
 //    @NotNull(message = "每页大小不能为空")
 //    @NotEmpty(message = "每页大小不能为空")
-    private long size;
+    private int size;
 
-    public long getCurrent() {
+    public int getCurrent() {
         return current;
     }
 
-    public void setCurrent(long current) {
+    public void setCurrent(int current) {
         this.current = current;
     }
 
-    public long getSize() {
+    public int getSize() {
         return size;
     }
 
-    public void setSize(long size) {
+    public void setSize(int size) {
         this.size = size;
     }
 

@@ -1,12 +1,17 @@
 package com.dz.blogserver.controller;
 
+import com.dz.blogserver.entity.UserDTO;
+import com.dz.blogserver.service.ManagementService;
+import com.dz.blogserver.util.AppUtils;
 import com.dz.blogserver.util.CommonUtils;
 import com.dz.blogserver.vo.basic.LoginVO;
+import com.dz.blogserver.vo.management.ApplicationUserVo;
 import com.dz.blogserver.vo.result.ResultEntity;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,6 +34,9 @@ import java.time.format.DateTimeFormatter;
  */
 @RestController
 public class BasicController {
+    @Autowired
+    private ManagementService managementService;
+
     @PostMapping(value = "/sayHello")
     public ResultEntity sayHello() {
         ResultEntity resultEntity = new ResultEntity();
@@ -51,6 +59,12 @@ public class BasicController {
                 UsernamePasswordToken token = new UsernamePasswordToken(loginVO.getUserAccount(), loginVO.getPassword());
                 try {
                     subject.login(token);
+                    UserDTO user = new UserDTO();
+                    ApplicationUserVo userInfo = managementService.findByUserAccount(loginVO.getUserAccount());
+                    user.setAccount(loginVO.getUserAccount());
+                    user.setName(userInfo.getUserName());
+                    user.setId(userInfo.getId());
+                    AppUtils.setLoginUser(user);
                 } catch (AuthenticationException e) {
                     resultEntity.failed("登录失败,用户名或密码错误");
                 }

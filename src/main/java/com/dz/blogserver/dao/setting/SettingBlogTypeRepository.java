@@ -1,8 +1,6 @@
 package com.dz.blogserver.dao.setting;
 
-import com.dz.blogserver.entity.business.BusinessBlog;
 import com.dz.blogserver.entity.setting.SettingBlogType;
-import com.dz.blogserver.vo.setting.SettingBlogTypeQuery;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

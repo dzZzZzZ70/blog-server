@@ -7,6 +7,7 @@ import com.dz.blogserver.vo.Param;
 import com.dz.blogserver.vo.UserAccountQuery;
 import com.dz.blogserver.vo.result.ResultEntity;
 import com.dz.blogserver.vo.setting.*;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,6 +104,7 @@ public class SettingController {
     }
 
     @PostMapping("/findSettingBlogType")
+    @RequiresPermissions("examination:queryPageOfUserAndMenu")
     public ResultEntity findSettingBlogType(@RequestBody @Valid UserAccountQuery query, BindingResult bindingResult) {
         logger.debug("调用方法findSettingBlogType，入参{}", query);
         ResultEntity resultEntity = new ResultEntity();

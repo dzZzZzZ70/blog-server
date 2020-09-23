@@ -35,4 +35,8 @@ public class ApplicationUserVo {
     public void setUserName(String userName) {
         this.userName = userName;
     }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }

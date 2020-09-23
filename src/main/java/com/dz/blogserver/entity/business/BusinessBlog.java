@@ -1,5 +1,6 @@
 package com.dz.blogserver.entity.business;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sun.xml.txw2.annotation.XmlCDATA;
 
 import javax.persistence.Column;
@@ -37,12 +38,16 @@ public class BusinessBlog implements Serializable {
     @Column(length = 100, nullable = false)
     private String editUser;
 
+    @Column
+    private String author;
+
     @Column(length = 100, nullable = false)
     private String createUser;
 
     @Column(nullable = false)
     private Date createDate;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateDate;
 
     @Column(length = 1, nullable = false)
@@ -144,6 +149,14 @@ public class BusinessBlog implements Serializable {
         this.shortContent = shortContent;
     }
 
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
     @Override
     public String toString() {
         return "BusinessBlog{" +
@@ -155,6 +168,7 @@ public class BusinessBlog implements Serializable {
             ", content='" + content + '\'' +
             ", blogLabel='" + blogLabel + '\'' +
             ", editUser='" + editUser + '\'' +
+            ", author='" + author + '\'' +
             ", createUser='" + createUser + '\'' +
             ", createDate=" + createDate +
             ", updateDate=" + updateDate +

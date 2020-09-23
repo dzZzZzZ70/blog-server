@@ -27,9 +27,10 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/fonts/**", "anon"); // font
         filterChainDefinitionMap.put("/favicon.ico", "anon"); // ohter
         filterChainDefinitionMap.put("/sayHello", "anon");
-        filterChainDefinitionMap.put("/controller/setting/findSettingBlogType", "anon");
+//        filterChainDefinitionMap.put("/controller/setting/findSettingBlogType", "anon");
         filterChainDefinitionMap.put("/controller/blog/findBlogByBlogType", "anon");
         filterChainDefinitionMap.put("/controller/blog/findBlog", "anon");
+        filterChainDefinitionMap.put("/controller/blog/findBlogPage", "anon");
         filterChainDefinitionMap.put("/controller/normal", "anon");
 
         //配置退出 过滤器,其中的具体的退出代码Shiro已经替我们实现了

@@ -1,5 +1,8 @@
 package com.dz.blogserver.config.shiro;
 
+import com.dz.blogserver.entity.management.ApplicationPermission;
+import com.dz.blogserver.entity.management.ApplicationRole;
+import com.dz.blogserver.entity.management.ApplicationUser;
 import com.dz.blogserver.service.ManagementService;
 import com.dz.blogserver.vo.management.ApplicationUserVo;
 import org.apache.shiro.authc.AuthenticationException;
@@ -7,6 +10,7 @@ import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,16 +21,16 @@ public class CustomerShiroRealm extends AuthorizingRealm {
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-//        SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-//        ApplicationUser userInfo  = (ApplicationUser)principalCollection.getPrimaryPrincipal();
-//        for(ApplicationRole role:userInfo.getApplicationRolesList()){
-//            authorizationInfo.addRole(role.getRoleName());
-//            for(ApplicationPermission p:role.getApplicationPermissionList()){
-//                authorizationInfo.addStringPermission(p.getPermission());
-//            }
-//        }
-//        return authorizationInfo;
-        return null;
+        SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
+        ApplicationUser userInfo  = (ApplicationUser)principalCollection.getPrimaryPrincipal();
+        for(ApplicationRole role:userInfo.getApplicationRolesList()){
+            authorizationInfo.addRole(role.getRoleName());
+            for(ApplicationPermission p:role.getApplicationPermissionList()){
+                authorizationInfo.addStringPermission(p.getPermission());
+            }
+        }
+        return authorizationInfo;
+//        return null;
     }
 
     @Override
